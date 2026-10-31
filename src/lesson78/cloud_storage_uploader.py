@@ -12,7 +12,7 @@ def generate_storage_key(prefix: str, file_path_str: str) -> str:
     normalized_path_str = str(Path(prefix) / Path(file_path_str).name)
 
     # prefix size must be in 1024 characters
-    if 3 <= normalized_path_str <= 1024:
+    if 3 <= len(normalized_path_str) <= 1024:
         return normalized_path_str
 
 
