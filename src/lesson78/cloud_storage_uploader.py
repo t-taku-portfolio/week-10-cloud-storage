@@ -19,7 +19,7 @@ def generate_storage_key(prefix: str, file_path_str: str) -> str:
 
 def compute_payload_intergrity(file_path_str: str) -> dict:
     """
-    Reads the file safely in binary chunks and returns file siza, MD5 hash, and SHA-256 checksum.
+    Reads the file safely in binary chunks and returns file size, MD5 hash, and SHA-256 checksum.
     """
 
     file_path = Path(file_path_str)
@@ -30,7 +30,7 @@ def compute_payload_intergrity(file_path_str: str) -> dict:
         }
 
     md5_hasher = hashlib.md5(usedforsecurity= False)
-    sha256_hasher =hashlib.sha224(usedforsecurity= False)
+    sha256_hasher = hashlib.sha224(usedforsecurity= False)
 
     try:
         with open(file_path, "rb") as f:
