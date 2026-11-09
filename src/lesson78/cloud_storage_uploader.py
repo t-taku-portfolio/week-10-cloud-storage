@@ -57,6 +57,29 @@ def evaluate_storage_tier(file_size_gb: float, access_frequency_days: int) -> st
     Recommends 'HOT', 'COOL', or 'ARHIVE' based on how frequently the file is accessed.
     """
 
+    # the dict expresses as following scheme 
+    # [tier] : {"storage" : [storage pricing per gb], "retrieval" : [retrieval pricing per gb]} 
+    RATES = {
+        "HOT" : {"storage" : 0.0, "retrieval" : 0.0 },
+        "COOL" : {"storage" : 0.0, "retrieval" : 0.0 },
+        "ARCHIVE" : {"storage" : 0.0, "retrieval" : 0.0 }
+    }
+
+    tier_estimate = {}
+    for tier, pricing in RATES.items():
+        
+        storage_cost = file_size_gb * pricing["storage"]
+        retrieval_cost = file_size_gb * access_frequently_days * pricing["retrieval"]
+        total_cost = round(storage_cost + retrieval_cost, 2)
+
+        tier_estimate[tier] = {
+            "storage_cost" = round(storage_cost, 2),
+            "retrieval_cost" = round(retrieval_cost, 2)
+            "total_monthly" = total_cost
+        }
+
+
+
 def save_as_JSON(dict_obj: dict, target_dir: str) -> str:
     """
     Save resulets as a JSON-formatted file into target directory. Returns the file path where the file is placed.
