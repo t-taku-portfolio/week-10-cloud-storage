@@ -69,14 +69,12 @@ def evaluate_storage_tier(file_size_gb: float, access_frequency_days: int) -> st
     for tier, pricing in RATES.items():
         
         storage_cost = file_size_gb * pricing["storage"]
-        retrieval_cost = file_size_gb * access_frequently_days * pricing["retrieval"]
+        retrieval_cost = file_size_gb * access_frequency_days * pricing["retrieval"]
         total_cost = round(storage_cost + retrieval_cost, 2)
 
-        tier_estimate[tier] = {
-            "storage_cost" = round(storage_cost, 2),
-            "retrieval_cost" = round(retrieval_cost, 2)
-            "total_monthly" = total_cost
-        }
+        tier_estimate[tier] = total_cost
+
+    return min(tier_estimate, key= lambda t: tier_estimate[t]) 
 
 
 
@@ -84,3 +82,7 @@ def save_as_JSON(dict_obj: dict, target_dir: str) -> str:
     """
     Save resulets as a JSON-formatted file into target directory. Returns the file path where the file is placed.
     """
+
+
+
+print(f"{evaluate_storage_tier(10, 10)}")
