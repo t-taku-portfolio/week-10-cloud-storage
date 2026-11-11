@@ -60,9 +60,9 @@ def evaluate_storage_tier(file_size_gb: float, access_frequency_days: int) -> st
     # the dict expresses as following scheme 
     # [tier] : {"storage" : [storage pricing per gb], "retrieval" : [retrieval pricing per gb]} 
     RATES = {
-        "HOT" : {"storage" : 0.0, "retrieval" : 0.0 },
-        "COOL" : {"storage" : 0.0, "retrieval" : 0.0 },
-        "ARCHIVE" : {"storage" : 0.0, "retrieval" : 0.0 }
+        "HOT" : {"storage" : 0.03, "retrieval" : 0.0 },
+        "COOL" : {"storage" : 0.0138, "retrieval" : 0.01 },
+        "ARCHIVE" : {"storage" : 0.005, "retrieval" : 0.03 }
     }
 
     tier_estimate = {}
