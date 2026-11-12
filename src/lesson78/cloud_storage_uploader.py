@@ -81,7 +81,7 @@ def evaluate_storage_tier(file_size_gb: float, access_frequency_days: int) -> st
 
 
 
-def save_as_JSON(obj_dict: dict, target_dir: str) -> str:
+def save_as_JSON(obj_dict: dict, target_dir= None) -> str:
     """
     Save resulets as a JSON-formatted file into target directory. Returns the file path where the file is placed.
     """
@@ -90,9 +90,13 @@ def save_as_JSON(obj_dict: dict, target_dir: str) -> str:
     timestamp = datetime.datetime.now(JAPAN_TOKYO).strftime("%Y_%m_%d")
     obj_dict["timestamp"] = timestamp
 
+    target_path = None
     if target_dir is None:
-        target_dir = Path.cwd()
-    file_path = target_dir / "storage_manifest.json"
+        target_path = Path.cwd()
+    else:
+        target_path = Path(target_dir)
+    
+    file_path = target_path / "storage_manifest.json"
 
     try:
         with open(file_path, "w") as f:
