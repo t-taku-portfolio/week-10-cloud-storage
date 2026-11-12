@@ -1,4 +1,7 @@
+import datetime
 import hashlib
+import json
+import zoneinfo
 from pathlib import Path
 
 
@@ -78,11 +81,27 @@ def evaluate_storage_tier(file_size_gb: float, access_frequency_days: int) -> st
 
 
 
-def save_as_JSON(dict_obj: dict, target_dir: str) -> str:
+def save_as_JSON(obj_dict: dict, target_dir: str) -> str:
     """
     Save resulets as a JSON-formatted file into target directory. Returns the file path where the file is placed.
     """
 
+    JAPAN_TOKYO = zoneinfo.ZoneInfo("Asia/Tokyo")
+    timestamp = datetime.datetime.now(JAPAN_TOKYO).strftime("%Y_%m_%d")
+    obj_dict["timestamp"] = timestamp
+
+    if target_dir is None:
+        target_dir = Path.cwd()
+    file_path = target_dir / "storage_manifest.json"
+
+    try:
+        with open(file_path, "w") as f:
+            json.dump(obj= obj_dict, fp= f, indent= 4)
+    except FileNotFoundError:
+        print("Target directory is not found")
+        raise
+
+    return file_path
 
 
 print(f"{evaluate_storage_tier(10, 10)}")
